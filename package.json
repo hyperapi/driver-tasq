@@ -1,6 +1,6 @@
 {
 	"name": "@hyperapi/driver-tasq",
-	"version": "0.1.0-beta.2",
+	"version": "0.1.0-beta.3",
 	"description": "Driver for HyperAPI based on Tasq.",
 	"publishConfig": {
 		"access": "public",
@@ -13,7 +13,7 @@
 	},
 	"peerDependencies": {
 		"@hyperapi/core": ">=0.1.0-beta.3",
-		"@kirick/tasq": ">=0.1.0-beta.10"
+		"@kirick/tasq": ">=0.1.0-beta.11"
 	},
 	"devDependencies": {
 		"@babel/eslint-parser": "7.21.8",

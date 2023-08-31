@@ -7,6 +7,11 @@ import Tasq           from '@kirick/tasq';
 export default class HyperAPITasqDriver extends HyperAPIDriver {
 	#tasqServer;
 
+	/**
+	 * @param {object} options Options.
+	 * @param {Tasq} options.tasq Tasq instance.
+	 * @param {string} options.topic Tasq topic to listen.
+	 */
 	constructor({
 		tasq,
 		topic,
@@ -33,6 +38,9 @@ export default class HyperAPITasqDriver extends HyperAPIDriver {
 		];
 	}
 
+	/**
+	 * Destroys the driver.
+	 */
 	destroy() {
 		this.#tasqServer.destroy();
 	}
