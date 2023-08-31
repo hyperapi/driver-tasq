@@ -1,7 +1,8 @@
 
-import HyperAPIDriver  from '@hyperapi/core/driver'; // eslint-disable-line import/no-unresolved, import/extensions, node/no-missing-import
-import HyperAPIRequest from '@hyperapi/core/request'; // eslint-disable-line import/no-unresolved, import/extensions, node/no-missing-import
-import Tasq            from '@kirick/tasq';
+import {
+	HyperAPIDriver,
+	HyperAPIRequest } from '@hyperapi/core';
+import Tasq           from '@kirick/tasq';
 
 export default class HyperAPITasqDriver extends HyperAPIDriver {
 	#tasqServer;
@@ -18,16 +19,18 @@ export default class HyperAPITasqDriver extends HyperAPIDriver {
 
 		this.#tasqServer = tasq.serve({
 			topic,
-			handler: async (method, args) => this.#onRequest(method, args),
+			handler: (method, args) => this.#onRequest(method, args),
 		});
 	}
 
 	async #onRequest(method, args) {
-		const response = await this.onRequest(
-			new HyperAPIRequest(method, args),
-		);
+		const request = new HyperAPIRequest(method, args);
+		const response = await this.onRequest(request);
 
-		return response.object();
+		return [
+			response.is_success,
+			response.getResponse(),
+		];
 	}
 
 	destroy() {

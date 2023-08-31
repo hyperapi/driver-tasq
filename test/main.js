@@ -11,7 +11,7 @@ import {
 import HyperAPITasqDriver from '../src/main.js';
 
 const redisClient = createClient();
-const tasq = new Tasq(redisClient);
+const tasq = new Tasq(redisClient._client);
 
 const driver = new HyperAPITasqDriver({
 	tasq,
@@ -19,8 +19,8 @@ const driver = new HyperAPITasqDriver({
 });
 
 const hyperAPIServer = new HyperAPI({
-	driver,
 	root: new URL('api', import.meta.url).pathname,
+	driver,
 });
 
 await new Promise((resolve) => setTimeout(resolve, 1000));
@@ -29,50 +29,76 @@ describe('requests', () => {
 	it('request ok', async () => {
 		deepStrictEqual(
 			await tasq.request(
-				'hyperapi.echo',
+				'hyperapi',
+				'echo',
 				{
 					name: 'Kirick',
 				},
 			),
-			{
-				code: 0,
-				data: 'Hello, Kirick!',
-			},
+			[
+				true,
+				{
+					message: 'Hello, Kirick!',
+				},
+			],
 		);
 	});
 
 	it('missing argument', async () => {
 		deepStrictEqual(
 			await tasq.request(
-				'hyperapi.echo',
-				{},
+				'hyperapi',
+				'echo',
 			),
-			{
-				code: 2,
-				description: 'One of the parameters specified was missing or invalid',
-			},
+			[
+				false,
+				{
+					code: 2,
+					description: 'One of the parameters specified was missing or invalid',
+				},
+			],
 		);
 	});
 
 	it('invalid argument', async () => {
 		deepStrictEqual(
 			await tasq.request(
-				'hyperapi.echo',
+				'hyperapi',
+				'echo',
 				{
 					name: 'ToooooooLongName',
 				},
 			),
-			{
-				code: 2,
-				description: 'One of the parameters specified was missing or invalid',
-			},
+			[
+				false,
+				{
+					code: 2,
+					description: 'One of the parameters specified was missing or invalid',
+				},
+			],
 		);
 	});
 
-	after(() => {
-		setTimeout(() => {
-			hyperAPIServer.destroy();
-			process.exit(0); // eslint-disable-line no-process-exit, unicorn/no-process-exit
-		});
+	it('unknown method', async () => {
+		deepStrictEqual(
+			await tasq.request(
+				'hyperapi',
+				'unknown',
+			),
+			[
+				false,
+				{
+					code: 5,
+					description: 'Unknown method called',
+				},
+			],
+		);
+	});
+});
+
+after(() => {
+	setTimeout(() => {
+		hyperAPIServer.destroy();
+		process.exit(0); // eslint-disable-line no-process-exit, unicorn/no-process-exit
 	});
 });
