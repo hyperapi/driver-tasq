@@ -11,10 +11,12 @@ export default class HyperAPITasqDriver extends HyperAPIDriver {
 	 * @param {object} options Options.
 	 * @param {Tasq} options.tasq Tasq instance.
 	 * @param {string} options.topic Tasq topic to listen.
+	 * @param {number=} [options.threads] Number of threads to use.
 	 */
 	constructor({
 		tasq,
 		topic,
+		threads = 1,
 	}) {
 		super();
 
@@ -24,6 +26,7 @@ export default class HyperAPITasqDriver extends HyperAPIDriver {
 
 		this.#tasqServer = tasq.serve({
 			topic,
+			threads,
 			handler: (method, args) => this.#onRequest(method, args),
 		});
 	}

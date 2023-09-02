@@ -1,6 +1,6 @@
 {
 	"name": "@hyperapi/driver-tasq",
-	"version": "0.1.0-beta.3",
+	"version": "0.1.0-beta.4",
 	"description": "Driver for HyperAPI based on Tasq.",
 	"publishConfig": {
 		"access": "public",

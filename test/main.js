@@ -26,7 +26,7 @@ const hyperAPIServer = new HyperAPI({
 await new Promise((resolve) => setTimeout(resolve, 1000));
 
 describe('requests', () => {
-	it('request ok', async () => {
+	it('request ok (sync)', async () => {
 		deepStrictEqual(
 			await tasq.request(
 				'hyperapi',
@@ -39,6 +39,24 @@ describe('requests', () => {
 				true,
 				{
 					message: 'Hello, Kirick!',
+				},
+			],
+		);
+	});
+
+	it('request ok (async)', async () => {
+		deepStrictEqual(
+			await tasq.request(
+				'hyperapi',
+				'echo.async',
+				{
+					name: 'Otsu',
+				},
+			),
+			[
+				true,
+				{
+					message: 'Hello, Otsu!',
 				},
 			],
 		);
