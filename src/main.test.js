@@ -15,6 +15,7 @@ const driver = new HyperAPITasqDriver(
 	},
 );
 
+// eslint-disable-next-line no-unused-vars
 const hyperAPIServer = new HyperAPI({
 	root: new URL('../test/api', import.meta.url).pathname,
 	driver,
