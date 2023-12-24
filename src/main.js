@@ -2,22 +2,24 @@
 import {
 	HyperAPIDriver,
 	HyperAPIRequest } from '@hyperapi/core';
-import Tasq           from '@kirick/tasq';
+import { Tasq }       from '@kirick/tasq';
 
-export default class HyperAPITasqDriver extends HyperAPIDriver {
+export class HyperAPITasqDriver extends HyperAPIDriver {
 	#tasqServer;
 
 	/**
-	 * @param {object} options Options.
-	 * @param {Tasq} options.tasq Tasq instance.
+	 * @param {Tasq} tasq Tasq instance.
+	 * @param {object} options -
 	 * @param {string} options.topic Tasq topic to listen.
-	 * @param {number=} [options.threads] Number of threads to use.
+	 * @param {number=} [options.threads] Number of threads to use. Default is 1.
 	 */
-	constructor({
+	constructor(
 		tasq,
-		topic,
-		threads = 1,
-	}) {
+		{
+			topic,
+			threads = 1,
+		},
+	) {
 		super();
 
 		if (tasq instanceof Tasq !== true) {
@@ -43,6 +45,7 @@ export default class HyperAPITasqDriver extends HyperAPIDriver {
 
 	/**
 	 * Destroys the driver.
+	 * @returns {void}
 	 */
 	destroy() {
 		this.#tasqServer.destroy();
