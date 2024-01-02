@@ -34,7 +34,7 @@
 		"valibot": "^0.24.1"
 	},
 	"scripts": {
-		"test": "bun run redis-up && npm run test-node && bun test",
+		"test": "bun run redis-up && bun test && npm run test-node",
 		"test-node": "NODE_OPTIONS=--experimental-vm-modules jest --forceExit",
 		"coverage": "bun run redis-up && bun test --coverage",
 		"build": "bun run build-cjs",
