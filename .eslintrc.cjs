@@ -29,10 +29,18 @@ module.exports = {
 	],
 	ignorePatterns: [
 		'dist/**/*',
+		'node_modules*/**/*',
 	],
 	rules: {
-		'array-bracket-spacing': [
+		'arrow-body-style': [
 			'error',
+			'as-needed',
+			{
+				requireReturnForObjectLiteral: true,
+			},
+		],
+		'array-bracket-spacing': [
+			'warn',
 			'always',
 			{
 				arraysInArrays: false,
@@ -49,9 +57,28 @@ module.exports = {
 		],
 		'camelcase': 'off',
 		'capitalized-comments': 'off',
+		'comma-dangle': [
+			'warn',
+			'always-multiline',
+		],
+		'func-names': 'off',
 		'import/extensions': [
 			'error',
 			'always',
+		],
+		'import/order': [
+			'error',
+			{
+				groups: [
+					[
+						'builtin',
+						'external',
+					],
+					'internal',
+					'parent',
+					'sibling',
+				],
+			},
 		],
 		'indent': [
 			'error',
@@ -61,6 +88,7 @@ module.exports = {
 				SwitchCase: 1,
 			},
 		],
+		'jsdoc/require-jsdoc': 'error',
 		'new-cap': [
 			'error',
 			{
@@ -78,8 +106,11 @@ module.exports = {
 				},
 			},
 		],
+		'no-multiple-empty-lines': 'warn',
 		'no-promise-executor-return': 'off',
+		'no-trailing-spaces': 'warn',
 		'no-unused-vars': 'warn',
+		'node/no-missing-import': 'off',
 		'node/no-unpublished-import': 'off',
 		'object-curly-spacing': [
 			'warn',
@@ -108,6 +139,10 @@ module.exports = {
 			'error',
 			'single',
 		],
+		'radix': [
+			'warn',
+			'as-needed',
+		],
 		'unicorn/no-null': 'off',
 		'unicorn/numeric-separators-style': [
 			'warn',
@@ -115,10 +150,7 @@ module.exports = {
 				onlyIfContainsSeparator: true,
 			},
 		],
-		'unicorn/prefer-ternary': [
-			'error',
-			'only-single-line',
-		],
+		'unicorn/prefer-ternary': 'off',
 		'unicorn/prevent-abbreviations': [
 			'error',
 			{

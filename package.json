@@ -1,24 +1,25 @@
 {
 	"name": "@hyperapi/driver-tasq",
-	"version": "0.1.0-beta.5",
+	"version": "0.2.0-beta.1",
 	"description": "Driver for HyperAPI based on Tasq.",
 	"publishConfig": {
 		"access": "public"
 	},
 	"type": "module",
 	"main": "src/main.js",
+	"types": "types/main.d.ts",
 	"exports": {
 		".": {
 			"import": "./src/main.js",
-			"require": "./dist/hyperapi-driver-tasq.cjs"
+			"require": "./dist/main.cjs"
 		}
 	},
 	"engines": {
 		"node": ">=10.0.0"
 	},
 	"peerDependencies": {
-		"@hyperapi/core": ">=0.1.0-beta.6",
-		"@kirick/tasq": ">=0.1.0-beta.103"
+		"@hyperapi/core": "^0.2.0-beta.2",
+		"@kirick/tasq": "^0.2.0-beta.1"
 	},
 	"devDependencies": {
 		"@babel/eslint-parser": "7.21.8",
@@ -29,19 +30,20 @@
 		"eslint-plugin-node": "11.1.0",
 		"eslint-plugin-promise": "6.1.1",
 		"eslint-plugin-unicorn": "47.0.0",
-		"jest": "^29.7.0",
 		"redis": "^4.6.12",
-		"valibot": "^0.24.1"
+		"valibot": "^0.35",
+		"vitest": "^1.6"
 	},
 	"scripts": {
-		"test": "bun run redis-up && bun test && npm run test-node",
-		"test-node": "NODE_OPTIONS=--experimental-vm-modules jest --forceExit",
-		"coverage": "bun run redis-up && bun test --coverage",
-		"build": "bun run build-cjs",
-		"build-cjs": "bunx esbuild --bundle --platform=node --format=cjs --packages=external --outfile=dist/hyperapi-driver-tasq.cjs src/main.js",
-		"npm-publish": "bun run build && bun run eslint . && bun run test && npm publish --tag beta; bun run redis-down",
-		"redis-up": "docker ps | grep test-redis-hyperapi-driver-tasq >/dev/null || docker run --rm -d -p 41934:6379 --name test-redis-hyperapi-driver-tasq redis:7-alpine",
-		"redis-down": "docker stop test-redis-hyperapi-driver-tasq"
+		"test": "bun run redis:up && npm run test:vitest && bun test --coverage && bun run redis:down",
+		"test:vitest": "vitest run --no-file-parallelism",
+		"build": "bun run build:types && bun run build:cjs",
+		"build:cjs": "bunx esbuild --bundle --platform=node --format=cjs --packages=external --outfile=dist/main.cjs src/main.js",
+		"build:types": "bunx tsc --skipLibCheck --declaration --emitDeclarationOnly --outDir types",
+		"publish:npm": "pnpm i && bun run build && eslint . && bunx tsc --skipLibCheck --noemit && bun run test && npm publish",
+		"publish:npm:beta": "bun run publish:npm --tag beta",
+		"redis:up": "docker ps | grep test-hyperapi-driver-tasq >/dev/null || docker run --rm -d -p 41934:6379 --name test-hyperapi-driver-tasq redis:7-alpine",
+		"redis:down": "docker stop test-hyperapi-driver-tasq"
 	},
 	"repository": {
 		"type": "git",

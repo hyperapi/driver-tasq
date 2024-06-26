@@ -1,6 +1,11 @@
 
-/* global describe, test, expect */
+// @ts-check
 
+import {
+	afterAll,
+	describe,
+	test,
+	expect }                  from 'vitest';
 import { HyperAPI }           from '@hyperapi/core';
 import { HyperAPITasqDriver } from '../src/main.js';
 import { createTasq }         from '../test/create-tasq.js';
@@ -15,13 +20,16 @@ const driver = new HyperAPITasqDriver(
 	},
 );
 
-// eslint-disable-next-line no-unused-vars
 const hyperAPIServer = new HyperAPI({
 	root: new URL('../test/api', import.meta.url).pathname,
 	driver,
 });
 
 await new Promise((resolve) => setTimeout(resolve, 100));
+
+afterAll(() => {
+	hyperAPIServer.destroy();
+});
 
 describe('requests', () => {
 	test('request ok (sync)', async () => {

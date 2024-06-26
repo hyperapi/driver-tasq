@@ -46,9 +46,19 @@ var HyperAPITasqDriver = class extends import_core.HyperAPIDriver {
       handler: (method, args) => this.#onRequest(method, args)
     });
   }
+  /**
+   * Handles the request.
+   * @param {string} method - API method name.
+   * @param {Record<string, any>} args - API method arguments.
+   * @returns {Promise<[boolean, any]>} - Whether the request was successful and the response.
+   */
   async #onRequest(method, args) {
-    const request = new import_core.HyperAPIRequest(method, args);
-    const response = await this.onRequest(request);
+    const response = await this.processRequest(
+      new import_core.HyperAPIRequest(
+        method,
+        args
+      )
+    );
     return [
       response.is_success,
       response.getResponse()

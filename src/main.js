@@ -33,9 +33,19 @@ export class HyperAPITasqDriver extends HyperAPIDriver {
 		});
 	}
 
+	/**
+	 * Handles the request.
+	 * @param {string} method - API method name.
+	 * @param {Record<string, any>} args - API method arguments.
+	 * @returns {Promise<[boolean, any]>} - Whether the request was successful and the response.
+	 */
 	async #onRequest(method, args) {
-		const request = new HyperAPIRequest(method, args);
-		const response = await this.onRequest(request);
+		const response = await this.processRequest(
+			new HyperAPIRequest(
+				method,
+				args,
+			),
+		);
 
 		return [
 			response.is_success,

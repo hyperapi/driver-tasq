@@ -1,6 +1,8 @@
 
-/* eslint-disable jsdoc/require-jsdoc */
-
+/**
+ * @param {import('@hyperapi/core').HyperAPIRequest<v.InferOutput<typeof ArgumentsSchema>>} request -
+ * @returns {Promise<{ message: string }>} -
+ */
 export default async function (request) {
 	await new Promise((resolve) => {
 		setTimeout(
@@ -14,17 +16,10 @@ export default async function (request) {
 	};
 }
 
-import {
-	never,
-	object,
-	string }       from 'valibot';
+import * as v      from 'valibot';
 import { valibot } from '../validator.js';
 
-export const argsValidator = valibot.bind(
-	object(
-		{
-			name: string(),
-		},
-		never(),
-	),
-);
+const ArgumentsSchema = v.strictObject({
+	name: v.string(),
+});
+export const argsValidator = valibot.bind(ArgumentsSchema);
