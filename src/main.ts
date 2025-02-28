@@ -82,9 +82,9 @@ export class HyperAPITasqDriver implements HyperAPIDriver<HyperAPIRequest<any>> 
 
 	/**
 	 * Handles the request.
-	 * @param path - API method name.
+	 * @param path - API method path.
 	 * @param args - API method arguments.
-	 * @returns - Whether the request was successful and the response.
+	 * @returns -
 	 */
 	private async processRequest(
 		path: string,
