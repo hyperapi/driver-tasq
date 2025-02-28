@@ -54,9 +54,9 @@ export class HyperAPITasqDriver {
     }
     /**
      * Handles the request.
-     * @param path - API method name.
+     * @param path - API method path.
      * @param args - API method arguments.
-     * @returns - Whether the request was successful and the response.
+     * @returns -
      */
     async processRequest(path, args) {
         if (!this.handler) {
@@ -69,6 +69,9 @@ export class HyperAPITasqDriver {
         });
         if (hyperapi_response instanceof HyperAPIError) {
             throw hyperapi_response;
+        }
+        if (hyperapi_response instanceof Response) {
+            throw new TypeError('Response is not supported in this driver');
         }
         return hyperapi_response;
     }

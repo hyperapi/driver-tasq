@@ -25,9 +25,9 @@ export declare class HyperAPITasqDriver implements HyperAPIDriver<HyperAPIReques
     stop(): void;
     /**
      * Handles the request.
-     * @param path - API method name.
+     * @param path - API method path.
      * @param args - API method arguments.
-     * @returns - Whether the request was successful and the response.
+     * @returns -
      */
     private processRequest;
 }
