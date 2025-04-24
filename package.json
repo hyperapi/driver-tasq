@@ -18,27 +18,26 @@
 		"node": ">=21"
 	},
 	"peerDependencies": {
-		"@hyperapi/core": "git+https://github.com/hyperapi/core#d8b753edc246919be9b2f026a78013335c71d310",
-		"@kirick/tasq": "^0.3.0-beta.2"
+		"@hyperapi/core": "github:hyperapi/core#d8b753edc246919be9b2f026a78013335c71d310",
+		"@kirick/tasq": "github:kirick13/tasq#173b0006829535c908f92a47b9c60ea9015a2331"
 	},
 	"devDependencies": {
 		"@kirick/eslint-config": "latest",
 		"@types/node": "^20.14.10",
 		"eslint": "9.10.0",
-		"redis": "^4.1",
-		"typescript": "5.5.4",
-		"vitest": "2.1.1"
+		"redis": "4.7.0",
+		"typescript": "5.8.3",
+		"vitest": "3.1.2"
 	},
 	"scripts": {
 		"build": "bun run build:ts && bun run build:cjs",
 		"build:cjs": "bun build dist/esm/main.js --platform=node --format=cjs --packages=external --outfile=dist/main.cjs",
-		"# build:cjs": "bunx esbuild --bundle --platform=node --format=cjs --packages=external --outfile=dist/main.cjs dist/esm/main.js",
 		"build:ts": "rm -r dist/esm dist/types ; tsc",
+		"check": "bun run build && bun run lint && bun run test",
 		"lint": "eslint . && tsc --skipLibCheck --noemit && (cd test && tsc --skipLibCheck --noemit)",
-		"publish:npm": "bun run build && bun run lint && bun run test && npm publish",
 		"redis:up": "docker ps | grep test-redis >/dev/null || docker run --rm -d -p 16379:6379 --name test-redis redis:7-alpine",
 		"redis:down": "docker stop test-redis",
-		"test": "export REDIS_PORT=16379 ; bun run redis:up && npm run test:vitest && bun test --coverage",
+		"test": "bun run redis:up && npm run test:vitest && bun test --coverage",
 		"test:vitest": "tsc -p tsconfig.vitest.json && vitest run --dir dist/vitest --no-file-parallelism ; rm -r dist/vitest"
 	},
 	"repository": {
