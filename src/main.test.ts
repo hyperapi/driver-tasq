@@ -4,14 +4,14 @@ import {
 	test,
 } from 'vitest';
 import { HyperAPI } from '@hyperapi/core';
-import { Tasq } from '@kirick/tasq';
+import { createTasq } from '@kirick/tasq';
 import { redisClient } from '../test/redis.js';
 import { HyperAPITasqDriver } from './main.js';
 
-const tasq = new Tasq(redisClient);
+const tasq = await createTasq(redisClient);
 
 const driver = new HyperAPITasqDriver(
-	new Tasq(redisClient),
+	tasq,
 	{
 		topic: 'hyperapi',
 		// threads: 2,
@@ -23,8 +23,6 @@ const hyperAPIServer = new HyperAPI({
 	driver,
 });
 
-// await new Promise((resolve) => setTimeout(resolve, 100));
-
 afterAll(() => {
 	hyperAPIServer.destroy();
 });
@@ -33,9 +31,7 @@ test('plain', async () => {
 	const result = await tasq.request(
 		'hyperapi',
 		'echo',
-		{
-			name: 'Kirick',
-		},
+		{ name: 'Kirick' },
 	);
 
 	expect(result).toStrictEqual([
