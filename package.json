@@ -18,7 +18,7 @@
 		"node": ">=21"
 	},
 	"peerDependencies": {
-		"@hyperapi/core": "github:hyperapi/core#d8b753edc246919be9b2f026a78013335c71d310",
+		"@hyperapi/core": "github:hyperapi/core#ca15b2c93608f45161267612ddc473dbe55d61f0",
 		"@kirick/tasq": "github:kirick13/tasq#cb9c917b8cf448d9236874d5bfd6ac1e6177ad70"
 	},
 	"devDependencies": {
