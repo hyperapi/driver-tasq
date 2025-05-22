@@ -1,28 +1,5 @@
-//#region rolldown:runtime
-var __create = Object.create;
-var __defProp = Object.defineProperty;
-var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
-var __getOwnPropNames = Object.getOwnPropertyNames;
-var __getProtoOf = Object.getPrototypeOf;
-var __hasOwnProp = Object.prototype.hasOwnProperty;
-var __copyProps = (to, from, except, desc) => {
-	if (from && typeof from === "object" || typeof from === "function") for (var keys = __getOwnPropNames(from), i = 0, n = keys.length, key; i < n; i++) {
-		key = keys[i];
-		if (!__hasOwnProp.call(to, key) && key !== except) __defProp(to, key, {
-			get: ((k) => from[k]).bind(null, key),
-			enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable
-		});
-	}
-	return to;
-};
-var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__getProtoOf(mod)) : {}, __copyProps(isNodeMode || !mod || !mod.__esModule ? __defProp(target, "default", {
-	value: mod,
-	enumerable: true
-}) : target, mod));
-
-//#endregion
-const __hyperapi_core = __toESM(require("@hyperapi/core"));
-require("@kirick/tasq");
+import { HyperAPIError, HyperAPIInternalError } from "@hyperapi/core";
+import { Tasq } from "@kirick/tasq";
 
 //#region src/main.ts
 var HyperAPITasqDriver = class {
@@ -55,11 +32,11 @@ var HyperAPITasqDriver = class {
 					response[1] = await this.processRequest(path, args);
 				} catch (error) {
 					response[0] = false;
-					if (error instanceof __hyperapi_core.HyperAPIError) response[1] = error.getResponse();
+					if (error instanceof HyperAPIError) response[1] = error.getResponse();
 					else {
 						console.error("Unhandled error in @hyperapi/driver-tasq:");
 						console.error(error);
-						response[1] = new __hyperapi_core.HyperAPIInternalError().getResponse();
+						response[1] = new HyperAPIInternalError().getResponse();
 					}
 				}
 				return response;
@@ -83,11 +60,11 @@ var HyperAPITasqDriver = class {
 			path,
 			args
 		});
-		if (hyperapi_response instanceof __hyperapi_core.HyperAPIError) throw hyperapi_response;
+		if (hyperapi_response instanceof HyperAPIError) throw hyperapi_response;
 		if (hyperapi_response instanceof Response) throw new TypeError("Response is not supported in this driver");
 		return hyperapi_response;
 	}
 };
 
 //#endregion
-exports.HyperAPITasqDriver = HyperAPITasqDriver;
+export { HyperAPITasqDriver };

@@ -1,9 +1,9 @@
 import {
-	HyperAPIDriver,
-	HyperAPIDriverHandler,
+	type HyperAPIDriver,
+	type HyperAPIDriverHandler,
+	type HyperAPIRequest,
 	HyperAPIError,
 	HyperAPIInternalError,
-	HyperAPIRequest,
 } from '@hyperapi/core';
 import {
 	Tasq,
@@ -43,7 +43,7 @@ export class HyperAPITasqDriver implements HyperAPIDriver<HyperAPIRequest<any>> 
 	 * @param handler - The handler to use.
 	 */
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	start(handler: HyperAPIDriverHandler<HyperAPIRequest<any>>) {
+	start(handler: HyperAPIDriverHandler<HyperAPIRequest<any>>): void {
 		this.handler = handler;
 		this.server = this.tasq.serve({
 			topic: this.options.topic,
@@ -76,7 +76,7 @@ export class HyperAPITasqDriver implements HyperAPIDriver<HyperAPIRequest<any>> 
 	}
 
 	/** Stops the server. */
-	stop() {
+	stop(): void {
 		this.server?.destroy();
 	}
 
