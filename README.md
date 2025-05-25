@@ -91,13 +91,13 @@ Plain Tasq server can return any data type, but HyperAPI Tasq driver returns a t
 This driver automatically translates HyperAPI errors into appropriate responses. For example:
 
 ```typescript
-import { HyperAPIRateLimitError } from '@hyperapi/core';
+import { HyperAPIBusyError } from '@hyperapi/core';
 
 export default function(request: HyperAPIRequest): HyperAPIResponse {
   // Check some condition
-  if (isRateLimited(request.ip)) {
-    throw new HyperAPIRateLimitError();
-    // will return [false,{"code":7,"description":"Rate limit exceeded"}]
+  if (isLocked()) {
+    throw new HyperAPIBusyError();
+    // will return [false,{"code":10,"description":"Endpoint is busy"}]
   }
 
   // Normal processing
