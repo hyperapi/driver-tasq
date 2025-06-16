@@ -23,7 +23,7 @@
 	},
 	"peerDependencies": {
 		"@hyperapi/core": "github:hyperapi/core#1cd49ca6cd7e875de1a848e9f52be4141f8d55f7",
-		"@kirick/tasq": "github:kirick-ts/tasq#c735a24381f981167bf8fc54cbdc6a0eecb5cf85"
+		"@kirick/tasq": "^0.3.0"
 	},
 	"devDependencies": {
 		"@kirick/eslint-config": "latest",

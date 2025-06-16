@@ -15,7 +15,7 @@
       },
       "peerDependencies": {
         "@hyperapi/core": "github:hyperapi/core#1cd49ca6cd7e875de1a848e9f52be4141f8d55f7",
-        "@kirick/tasq": "github:kirick-ts/tasq#c735a24381f981167bf8fc54cbdc6a0eecb5cf85",
+        "@kirick/tasq": "^0.3.0",
       },
     },
   },
@@ -132,7 +132,7 @@
 
     "@kirick/eslint-config": ["@kirick/eslint-config@0.1.30", "", { "dependencies": { "@stylistic/eslint-plugin": "^2.6.1", "eslint-plugin-jsdoc": "^48.11.0", "eslint-plugin-n": "^17.10.2", "eslint-plugin-promise": "^7.1.0", "eslint-plugin-unicorn": "^55.0.0", "eslint-plugin-vue": "^9.27.0", "globals": "^15.9.0", "typescript-eslint": "^8.0.0" } }, "sha512-RjmSG2380JS/MCh80hnLpVKBI0V5+ggGugTXVK+2Gf0sTq54R5KzX9rKkE1FFIqedG7ZkGyDuipJc7zDYVBQ4g=="],
 
-    "@kirick/tasq": ["@kirick/tasq@github:kirick-ts/tasq#c735a24", { "dependencies": { "cbor-x": "1.6.0" }, "peerDependencies": { "redis": "^4.1" } }, "kirick-ts-tasq-c735a24"],
+    "@kirick/tasq": ["@kirick/tasq@0.3.3", "", { "dependencies": { "cbor-x": "1.6.0" }, "peerDependencies": { "redis": "^4.1" } }, "sha512-9taORe+s+yNYOq59qIBJYAl59vDUOzfvXMayhjaVXKomLwUBO3bc3HAQEzaa2BjtwJIpPmoJ+AFP01+NBDWpiQ=="],
 
     "@napi-rs/wasm-runtime": ["@napi-rs/wasm-runtime@0.2.9", "", { "dependencies": { "@emnapi/core": "^1.4.0", "@emnapi/runtime": "^1.4.0", "@tybys/wasm-util": "^0.9.0" } }, "sha512-OKRBiajrrxB9ATokgEQoG87Z25c67pCpYcCwmXYX8PBftC9pBfN18gnm/fh1wurSLEKIAt+QRFLFCQISrb66Jg=="],
 
