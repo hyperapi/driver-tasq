@@ -21,7 +21,8 @@ var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__ge
 }) : target, mod));
 
 //#endregion
-const __hyperapi_core = __toESM(require("@hyperapi/core"));
+let __hyperapi_core = require("@hyperapi/core");
+__hyperapi_core = __toESM(__hyperapi_core);
 require("@kirick/tasq");
 
 //#region src/main.ts

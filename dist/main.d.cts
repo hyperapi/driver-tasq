@@ -6,12 +6,10 @@ interface Options {
   topic: string;
   threads?: number;
 }
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 declare class HyperAPITasqDriver implements HyperAPIDriver<HyperAPIRequest<any>> {
   private tasq;
   private options;
   private server;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   private handler;
   /**
   * @param tasq Tasq instance.
@@ -24,7 +22,6 @@ declare class HyperAPITasqDriver implements HyperAPIDriver<HyperAPIRequest<any>>
   * Starts the server.
   * @param handler - The handler to use.
   */
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   start(handler: HyperAPIDriverHandler<HyperAPIRequest<any>>): void;
   /** Stops the server. */
   stop(): void;
@@ -35,5 +32,6 @@ declare class HyperAPITasqDriver implements HyperAPIDriver<HyperAPIRequest<any>>
   * @returns -
   */
   private processRequest;
-} //#endregion
+}
+//#endregion
 export { HyperAPITasqDriver };

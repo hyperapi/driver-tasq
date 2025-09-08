@@ -1,22 +1,15 @@
-import {
-	afterAll,
-	expect,
-	test,
-} from 'vitest';
 import { HyperAPI } from '@hyperapi/core';
 import { createTasq } from '@kirick/tasq';
+import { afterAll, expect, test } from 'vitest';
 import { redisClient } from '../test/redis.js';
 import { HyperAPITasqDriver } from './main.js';
 
 const tasq = await createTasq(redisClient);
 
-const driver = new HyperAPITasqDriver(
-	tasq,
-	{
-		topic: 'hyperapi',
-		// threads: 2,
-	},
-);
+const driver = new HyperAPITasqDriver(tasq, {
+	topic: 'hyperapi',
+	// threads: 2,
+});
 
 const hyperAPIServer = new HyperAPI({
 	root: new URL('../test/hyper-api', import.meta.url).pathname,
@@ -28,11 +21,7 @@ afterAll(() => {
 });
 
 test('plain', async () => {
-	const result = await tasq.request(
-		'hyperapi',
-		'echo',
-		{ name: 'Kirick' },
-	);
+	const result = await tasq.request('hyperapi', 'echo', { name: 'Kirick' });
 
 	expect(result).toStrictEqual([
 		true,
@@ -43,10 +32,7 @@ test('plain', async () => {
 });
 
 test('slug argument', async () => {
-	const result = await tasq.request(
-		'hyperapi',
-		'echo/otsu',
-	);
+	const result = await tasq.request('hyperapi', 'echo/otsu');
 
 	expect(result).toStrictEqual([
 		true,
@@ -57,10 +43,7 @@ test('slug argument', async () => {
 });
 
 test('unknown method', async () => {
-	const result = await tasq.request(
-		'hyperapi',
-		'unknown',
-	);
+	const result = await tasq.request('hyperapi', 'unknown');
 
 	expect(result).toStrictEqual([
 		false,

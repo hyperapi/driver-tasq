@@ -1,23 +1,21 @@
 import {
 	type HyperAPIDriver,
 	type HyperAPIDriverHandler,
-	type HyperAPIRequest,
 	HyperAPIError,
 	HyperAPIInternalError,
+	type HyperAPIRequest,
 } from '@hyperapi/core';
-import {
-	Tasq,
-	type TasqServer,
-	type TasqRequestData,
-} from '@kirick/tasq';
+import { Tasq, type TasqRequestData, type TasqServer } from '@kirick/tasq';
 
 interface Options {
 	topic: string;
 	threads?: number;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export class HyperAPITasqDriver implements HyperAPIDriver<HyperAPIRequest<any>> {
+export class HyperAPITasqDriver
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	implements HyperAPIDriver<HyperAPIRequest<any>>
+{
 	private tasq: Tasq;
 	private options: Options;
 	private server: TasqServer | undefined;
@@ -30,10 +28,7 @@ export class HyperAPITasqDriver implements HyperAPIDriver<HyperAPIRequest<any>> 
 	 * @param options.topic Tasq topic to listen.
 	 * @param options.threads Number of threads to use. Default is 1.
 	 */
-	constructor(
-		tasq: Tasq,
-		options: Options,
-	) {
+	constructor(tasq: Tasq, options: Options) {
 		this.tasq = tasq;
 		this.options = options;
 	}
@@ -49,21 +44,19 @@ export class HyperAPITasqDriver implements HyperAPIDriver<HyperAPIRequest<any>> 
 			topic: this.options.topic,
 			threads: this.options.threads,
 			handler: async (path, args) => {
-				const response: [ boolean, unknown ] = [ true, undefined ];
+				const response: [boolean, unknown] = [true, undefined];
 
 				try {
 					response[1] = await this.processRequest(path, args);
-				}
-				catch (error) {
+				} catch (error) {
 					response[0] = false;
 
 					if (error instanceof HyperAPIError) {
 						response[1] = error.getResponse();
-					}
-					else {
-						// eslint-disable-next-line no-console
+					} else {
+						// oxlint-disable-next-line no-console
 						console.error('Unhandled error in @hyperapi/driver-tasq:');
-						// eslint-disable-next-line no-console
+						// oxlint-disable-next-line no-console
 						console.error(error);
 
 						response[1] = new HyperAPIInternalError().getResponse();
