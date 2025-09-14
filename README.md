@@ -44,16 +44,16 @@ const tasq = await createTasq(redisClient);
 
 // Create the Tasq driver
 const driver = new HyperAPITasqDriver(tasq, {
-  topic: 'user-service',  // Service name other services will call
-  threads: 4,             // Process up to 4 requests concurrently
+  topic: 'user-service', // Service name other services will call
+  threads: 4,            // Process up to 4 requests concurrently
 });
 
 // Initialize HyperAPI with the driver
-const hyperApiCore = new HyperAPI({
+export const hyperApi = new HyperAPI(
   driver,
   // Optional: custom path to API methods
-  // root: path.join(import.meta.dir, 'my-api')
-});
+  // path.join(import.meta.dir, 'my-api')
+);
 
 console.log('User service is ready to handle Tasq requests');
 ```
@@ -91,9 +91,10 @@ Plain Tasq server can return any data type, but HyperAPI Tasq driver returns a t
 This driver automatically translates HyperAPI errors into appropriate responses. For example:
 
 ```typescript
-import { HyperAPIBusyError } from '@hyperapi/core';
+// import you HyperAPI instance
+import { hyperApi } from '../main.ts';
 
-export default function(request: HyperAPIRequest): HyperAPIResponse {
+export default hyperApi.module().action((request) => {
   // Check some condition
   if (isLocked()) {
     throw new HyperAPIBusyError();
@@ -103,25 +104,7 @@ export default function(request: HyperAPIRequest): HyperAPIResponse {
   // Normal processing
   return { message: "Success" };
   // client will receive [ true, { "message": "Success" }]
-}
-```
-
-## TypeScript Support
-
-Tasq driver does not have extended request type, it uses plain `HyperAPIRequest` type from `@hyperapi/core`. You can still specify your argument types for type safety:
-
-```typescript
-export default function(
-  request: HyperAPIRequest<{
-    id: number;
-    name: string;
-  }>
-): HyperAPIResponse {
-  // request.args.id and request.args.name are now properly typed
-  return {
-    message: `Hello, ${request.args.name} (ID: ${request.args.id})!`
-  };
-}
+});
 ```
 
 ## Contributing
