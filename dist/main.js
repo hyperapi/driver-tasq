@@ -1,12 +1,10 @@
 import { HyperAPIError, HyperAPIInternalError } from "@hyperapi/core";
+import { HyperAPIDriver } from "@hyperapi/core/dev";
 import { Tasq } from "@kirick/tasq";
 
 //#region src/main.ts
-var HyperAPITasqDriver = class {
-	tasq;
-	options;
+var HyperAPITasqDriver = class extends HyperAPIDriver {
 	server;
-	handler = null;
 	/**
 	* @param tasq Tasq instance.
 	* @param options -
@@ -14,15 +12,9 @@ var HyperAPITasqDriver = class {
 	* @param options.threads Number of threads to use. Default is 1.
 	*/
 	constructor(tasq, options) {
+		super();
 		this.tasq = tasq;
 		this.options = options;
-	}
-	/**
-	* Starts the server.
-	* @param handler - The handler to use.
-	*/
-	start(handler) {
-		this.handler = handler;
 		this.server = this.tasq.serve({
 			topic: this.options.topic,
 			threads: this.options.threads,
@@ -43,10 +35,6 @@ var HyperAPITasqDriver = class {
 			}
 		});
 	}
-	/** Stops the server. */
-	stop() {
-		this.server?.destroy();
-	}
 	/**
 	* Handles the request.
 	* @param path - API method path.
@@ -54,15 +42,20 @@ var HyperAPITasqDriver = class {
 	* @returns -
 	*/
 	async processRequest(path, args) {
-		if (!this.handler) throw new Error("No handler available.");
-		const hyperapi_response = await this.handler({
+		if (Array.isArray(args)) throw new TypeError("Despite the fact that Tasq supports arrays as arguments, they are not supported in HyperAPI driver.");
+		const hyperapi_response = await this.emitRequest({
 			method: "UNKNOWN",
 			path,
-			args
+			args: args ?? {}
 		});
 		if (hyperapi_response instanceof HyperAPIError) throw hyperapi_response;
 		if (hyperapi_response instanceof Response) throw new TypeError("Response is not supported in this driver");
 		return hyperapi_response;
+	}
+	/** Stops the server. */
+	destroy() {
+		this.server?.destroy();
+		super.destroy();
 	}
 };
 

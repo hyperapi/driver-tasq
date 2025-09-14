@@ -1,24 +1,5 @@
-import { HyperAPI } from '@hyperapi/core';
-import { createTasq } from '@kirick/tasq';
-import { afterAll, expect, test } from 'vitest';
-import { redisClient } from '../test/redis.js';
-import { HyperAPITasqDriver } from './main.js';
-
-const tasq = await createTasq(redisClient);
-
-const driver = new HyperAPITasqDriver(tasq, {
-	topic: 'hyperapi',
-	// threads: 2,
-});
-
-const hyperAPIServer = new HyperAPI({
-	root: new URL('../test/hyper-api', import.meta.url).pathname,
-	driver,
-});
-
-afterAll(() => {
-	hyperAPIServer.destroy();
-});
+import { expect, test } from 'vitest';
+import { tasq } from '../test/setup.js';
 
 test('plain', async () => {
 	const result = await tasq.request('hyperapi', 'echo', { name: 'Kirick' });

@@ -1,4 +1,4 @@
-import { HyperAPIDriver, HyperAPIDriverHandler, HyperAPIRequest } from "@hyperapi/core";
+import { HyperAPIDriver, HyperAPIRequest } from "@hyperapi/core/dev";
 import { Tasq } from "@kirick/tasq";
 
 //#region src/main.d.ts
@@ -6,11 +6,10 @@ interface Options {
   topic: string;
   threads?: number;
 }
-declare class HyperAPITasqDriver implements HyperAPIDriver<HyperAPIRequest<any>> {
+declare class HyperAPITasqDriver extends HyperAPIDriver<HyperAPIRequest> {
   private tasq;
   private options;
   private server;
-  private handler;
   /**
   * @param tasq Tasq instance.
   * @param options -
@@ -19,19 +18,14 @@ declare class HyperAPITasqDriver implements HyperAPIDriver<HyperAPIRequest<any>>
   */
   constructor(tasq: Tasq, options: Options);
   /**
-  * Starts the server.
-  * @param handler - The handler to use.
-  */
-  start(handler: HyperAPIDriverHandler<HyperAPIRequest<any>>): void;
-  /** Stops the server. */
-  stop(): void;
-  /**
   * Handles the request.
   * @param path - API method path.
   * @param args - API method arguments.
   * @returns -
   */
   private processRequest;
+  /** Stops the server. */
+  destroy(): void;
 }
 //#endregion
 export { HyperAPITasqDriver };

@@ -1,6 +1,6 @@
 {
 	"name": "@hyperapi/driver-tasq",
-	"version": "0.3.0-dev",
+	"version": "0.5.0-dev",
 	"description": "Driver for HyperAPI based on Tasq.",
 	"publishConfig": {
 		"access": "public"
@@ -22,7 +22,7 @@
 		"node": ">=21"
 	},
 	"peerDependencies": {
-		"@hyperapi/core": "github:hyperapi/core#3d1898caa28e0cbc55c978f33bd9edf5a836337a",
+		"@hyperapi/core": "github:hyperapi/core#fda360853e4fdd986bedc7e275e11241fd62140e",
 		"@kirick/tasq": "^0.3.0"
 	},
 	"devDependencies": {
@@ -34,8 +34,10 @@
 		"publint": "0.3.12",
 		"redis": "^4.7",
 		"tsdown": "0.14.2",
+		"type-fest": "4.41.0",
 		"typescript": "5.9.2",
 		"unplugin-unused": "0.5.2",
+		"valibot": "1.1.0",
 		"vitest": "3.2.4"
 	},
 	"scripts": {
