@@ -61,7 +61,7 @@ console.log('User service is ready to handle Tasq requests');
 > [!NOTE]
 > Unlike HTTP, Tasq protocol does not have verbs like `GET`, `POST`, etc. However, HyperAPI core expects it, so Tasq driver uses speacial `UNKNOWN` pseudo-method reserved for non-HTTP API servers.
 >
-> This means that you **can not** specify HTTP methods in your file names like `[get]`, `[post]`, etc. Just omit them entirely when creating your API modules.
+> This means that you **can not** specify HTTP methods in your file names like `user.get.ts`, `user.post.ts`, etc. Just omit them entirely when creating your API modules.
 
 ### Request Format
 
