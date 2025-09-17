@@ -22,7 +22,7 @@
 		"node": ">=21"
 	},
 	"peerDependencies": {
-		"@hyperapi/core": "github:hyperapi/core#fda360853e4fdd986bedc7e275e11241fd62140e",
+		"@hyperapi/core": "github:hyperapi/core#fc3b443a432afc2b6ea381d67e9283f0389d12fb",
 		"@kirick/tasq": "^0.3.0"
 	},
 	"devDependencies": {
@@ -34,7 +34,6 @@
 		"publint": "0.3.12",
 		"redis": "^4.7",
 		"tsdown": "0.14.2",
-		"type-fest": "4.41.0",
 		"typescript": "5.9.2",
 		"unplugin-unused": "0.5.2",
 		"valibot": "1.1.0",
