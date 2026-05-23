@@ -29,7 +29,7 @@ require("@kirick/tasq");
 
 //#region src/main.ts
 var HyperAPITasqDriver = class extends __hyperapi_core_dev.HyperAPIDriver {
-	server;
+	#server;
 	/**
 	* @param tasq Tasq instance.
 	* @param options -
@@ -38,11 +38,9 @@ var HyperAPITasqDriver = class extends __hyperapi_core_dev.HyperAPIDriver {
 	*/
 	constructor(tasq, options) {
 		super();
-		this.tasq = tasq;
-		this.options = options;
-		this.server = this.tasq.serve({
-			topic: this.options.topic,
-			threads: this.options.threads,
+		this.#server = tasq.serve({
+			topic: options.topic,
+			threads: options.threads,
 			handler: async (path, args) => {
 				const response = [true, void 0];
 				try {
@@ -69,7 +67,7 @@ var HyperAPITasqDriver = class extends __hyperapi_core_dev.HyperAPIDriver {
 	async processRequest(path, args) {
 		if (Array.isArray(args)) throw new TypeError("Despite the fact that Tasq supports arrays as arguments, they are not supported in HyperAPI driver.");
 		const hyperapi_response = await this.emitRequest({
-			method: "UNKNOWN",
+			method: "UNDEF",
 			path,
 			args: args ?? {}
 		});
@@ -79,7 +77,7 @@ var HyperAPITasqDriver = class extends __hyperapi_core_dev.HyperAPIDriver {
 	}
 	/** Stops the server. */
 	destroy() {
-		this.server?.destroy();
+		this.#server?.destroy();
 		super.destroy();
 	}
 };

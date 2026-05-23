@@ -8,7 +8,7 @@ interface Options {
 }
 
 export class HyperAPITasqDriver extends HyperAPIDriver<HyperAPIRequest> {
-	private server: TasqServer | undefined;
+	#server: TasqServer | undefined;
 
 	/**
 	 * @param tasq Tasq instance.
@@ -16,15 +16,12 @@ export class HyperAPITasqDriver extends HyperAPIDriver<HyperAPIRequest> {
 	 * @param options.topic Tasq topic to listen.
 	 * @param options.threads Number of threads to use. Default is 1.
 	 */
-	constructor(
-		private tasq: Tasq,
-		private options: Options,
-	) {
+	constructor(tasq: Tasq, options: Options) {
 		super();
 
-		this.server = this.tasq.serve({
-			topic: this.options.topic,
-			threads: this.options.threads,
+		this.#server = tasq.serve({
+			topic: options.topic,
+			threads: options.threads,
 			handler: async (path, args) => {
 				const response: [boolean, unknown] = [true, undefined];
 
@@ -67,7 +64,7 @@ export class HyperAPITasqDriver extends HyperAPIDriver<HyperAPIRequest> {
 		}
 
 		const hyperapi_response = await this.emitRequest({
-			method: 'UNKNOWN',
+			method: 'UNDEF',
 			path,
 			args: args ?? {},
 		});
@@ -85,7 +82,7 @@ export class HyperAPITasqDriver extends HyperAPIDriver<HyperAPIRequest> {
 
 	/** Stops the server. */
 	override destroy(): void {
-		this.server?.destroy();
+		this.#server?.destroy();
 
 		super.destroy();
 	}

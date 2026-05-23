@@ -7,9 +7,7 @@ interface Options {
   threads?: number;
 }
 declare class HyperAPITasqDriver extends HyperAPIDriver<HyperAPIRequest> {
-  private tasq;
-  private options;
-  private server;
+  #private;
   /**
   * @param tasq Tasq instance.
   * @param options -
