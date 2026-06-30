@@ -23,7 +23,7 @@ declare class HyperAPITasqDriver extends HyperAPIDriver<HyperAPIRequest> {
   */
   private processRequest;
   /** Stops the server. */
-  destroy(): void;
+  override destroy(): void;
 }
 //#endregion
 export { HyperAPITasqDriver };

@@ -63,7 +63,7 @@ export class HyperAPITasqDriver extends HyperAPIDriver<HyperAPIRequest> {
 			);
 		}
 
-		const hyperapi_response = await this.emitRequest({
+		const hyperapi_response = await this.fetch({
 			method: 'UNDEF',
 			path,
 			args: args ?? {},

@@ -1,7 +1,6 @@
 import { HyperAPIError, HyperAPIInternalError } from "@hyperapi/core";
 import { HyperAPIDriver } from "@hyperapi/core/dev";
-import { Tasq } from "@kirick/tasq";
-
+import "@kirick/tasq";
 //#region src/main.ts
 var HyperAPITasqDriver = class extends HyperAPIDriver {
 	#server;
@@ -41,7 +40,7 @@ var HyperAPITasqDriver = class extends HyperAPIDriver {
 	*/
 	async processRequest(path, args) {
 		if (Array.isArray(args)) throw new TypeError("Despite the fact that Tasq supports arrays as arguments, they are not supported in HyperAPI driver.");
-		const hyperapi_response = await this.emitRequest({
+		const hyperapi_response = await this.fetch({
 			method: "UNDEF",
 			path,
 			args: args ?? {}
@@ -56,6 +55,5 @@ var HyperAPITasqDriver = class extends HyperAPIDriver {
 		super.destroy();
 	}
 };
-
 //#endregion
 export { HyperAPITasqDriver };
