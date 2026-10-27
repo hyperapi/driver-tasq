@@ -8,7 +8,7 @@ interface Options {
 }
 
 export class HyperAPITasqDriver extends HyperAPIDriver<HyperAPIRequest> {
-	#server: TasqServer | undefined;
+	#server: TasqServer;
 
 	/**
 	 * @param tasq Tasq instance.
@@ -73,17 +73,12 @@ export class HyperAPITasqDriver extends HyperAPIDriver<HyperAPIRequest> {
 			throw hyperapi_response;
 		}
 
-		if (hyperapi_response instanceof Response) {
-			throw new TypeError('Response is not supported in this driver');
-		}
-
 		return hyperapi_response;
 	}
 
 	/** Stops the server. */
-	override destroy(): void {
-		this.#server?.destroy();
-
-		super.destroy();
+	override async destroy(): Promise<void> {
+		await this.#server.destroy();
+		await super.destroy();
 	}
 }
