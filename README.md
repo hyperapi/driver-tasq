@@ -1,6 +1,7 @@
 # HyperAPI Tasq Driver
 
 [![npm version](https://img.shields.io/npm/v/@hyperapi/driver-tasq.svg)](https://www.npmjs.com/package/@hyperapi/driver-tasq)
+[![Open on npmx.dev](https://npmx.dev/api/registry/badge/version/@hyperapi/driver-tasq?style=shieldsio&label=npmx.dev)](https://npmx.dev/package/@hyperapi/driver-tasq)
 [![license](https://img.shields.io/npm/l/@hyperapi/driver-tasq.svg?color=blue)](https://github.com/hyperapi/driver-tasq/blob/main/LICENSE)
 
 A HyperAPI driver that enables microservice communication through [Tasq](https://github.com/kirick-ts/tasq), a Redis-backed task scheduler. This driver bridges HyperAPI's file-based routing and type-safe API development with Tasq's reliable request-response pattern for distributed systems.
